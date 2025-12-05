@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS | Protocolos y Transparencia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body { background: #030303; color: #ccc; font-family: 'Outfit'; }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
+        .data-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
+        .grade-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 top-0 bg-black/90 border-b border-white/5 p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-sm font-mono text-gray-500 hover:text-white flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> VOLVER_INICIO
+            </a>
+            <span class="font-tech text-nexus-cyan tracking-widest">DB_TRANSPARENCIA</span>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-20 px-6 max-w-4xl mx-auto space-y-12">
+
+        <div class="border-l-2 border-white/20 pl-6">
+            <h1 class="text-4xl font-tech font-bold text-white mb-2">ESTÁNDARES DE CALIDAD</h1>
+            <p class="text-gray-500 max-w-lg">
+                NEXUS opera con absoluta transparencia. A continuación se presentan las especificaciones técnicas sobre la condición de los equipos.
+            </p>
+        </div>
+
+        <section>
+            <h2 class="text-xl font-tech font-bold text-white mb-6 flex items-center gap-2"><i data-lucide="layers"></i> CLASIFICACIÓN HARDWARE</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                
+                <div class="data-panel border-t-2 border-t-green-500">
+                    <div class="flex items-center mb-2 font-bold text-green-500 font-mono text-xs">
+                        <span class="grade-indicator bg-green-500 shadow-[0_0_10px_#22c55e]"></span> GRADO A
+                    </div>
+                    <h3 class="text-white font-bold mb-2">IMPECABLE</h3>
+                    <p class="text-xs leading-relaxed">Estética 9.5-10/10. Sin rasguños visibles. Salud de batería óptima. Indistinguible de nuevo.</p>
+                </div>
+
+                <div class="data-panel border-t-2 border-t-yellow-500">
+                    <div class="flex items-center mb-2 font-bold text-yellow-500 font-mono text-xs">
+                        <span class="grade-indicator bg-yellow-500"></span> GRADO B
+                    </div>
+                    <h3 class="text-white font-bold mb-2">ESTÁNDAR</h3>
+                    <p class="text-xs leading-relaxed">Estética 8-9/10. Micro-rayones visibles bajo luz directa. 100% Funcional. Mejor relación valor/precio.</p>
+                </div>
+
+                <div class="data-panel border-t-2 border-t-red-500">
+                    <div class="flex items-center mb-2 font-bold text-red-500 font-mono text-xs">
+                        <span class="grade-indicator bg-red-500"></span> GRADO C
+                    </div>
+                    <h3 class="text-white font-bold mb-2">ECONOMÍA</h3>
+                    <p class="text-xs leading-relaxed">Desgaste o golpes visibles. Pantalla e internos 100% funcionales. El precio más bajo.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-8">
+            <div class="data-panel">
+                <h3 class="font-tech text-lg text-white mb-4 flex gap-2"><i data-lucide="shield-check"></i> PROTOCOLO DE GARANTÍA</h3>
+                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-gray-600">
+                    <li><strong>Cobertura de 7 Días</strong> por defectos de fábrica.</li>
+                    <li>Nula si se detecta daño por agua o caídas.</li>
+                    <li>Empaque original requerido para RMA (Devolución).</li>
+                </ul>
+            </div>
+            <div class="data-panel">
+                <h3 class="font-tech text-lg text-white mb-4 flex gap-2"><i data-lucide="truck"></i> LOGÍSTICA</h3>
+                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-gray-600">
+                    <li>Cobertura nacional (México).</li>
+                    <li>Seguro Opcional: 1.5% del valor total.</li>
+                    <li>ID de Rastreo proporcionado vía WhatsApp.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>g

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEXUS | Base de Datos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], tech: ['Rajdhani', 'sans-serif'] },
+                    colors: { nexus: { black: '#030303', cyan: '#00F0FF', purple: '#7000FF', green: '#00FF94', red: '#FF2A6D' } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #030303; color: #e5e5e5; overflow-x: hidden; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-panel { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-card { background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; position: relative; overflow: hidden; }
+        .glass-card:hover { border-color: rgba(0, 240, 255, 0.4); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.15); }
+        .filter-pill { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s ease; }
+        .filter-pill.active { background: #00F0FF; color: #000; border-color: #00F0FF; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+        .nav-link { font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <div class="fixed inset-0 bg-nexus-black z-[-2]"></div>
+    <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=')] opacity-20 z-[-1] pointer-events-none"></div>
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 top-0 glass-panel">
+        <div class="px-6 h-20 flex justify-between items-center max-w-7xl mx-auto">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-6 h-6 border border-white/20 relative flex items-center justify-center rotate-45 group-hover:border-nexus-cyan/50 transition-colors">
+                    <div class="w-1.5 h-1.5 bg-nexus-cyan"></div>
+                </div>
+                <span class="text-xl font-tech font-bold tracking-widest text-white ml-2">NEXUS</span>
+            </a>
+            
+            <div class="hidden md:flex gap-8 text-sm text-gray-400">
+                <a href="index.html" class="nav-link hover:text-white transition">Interfaz</a>
+                <a href="#" class="nav-link text-white border-b border-nexus-cyan">Hardware</a>
+                <a href="gamers.html" class="nav-link hover:text-nexus-green transition">División Gaming</a>
+                <a href="wwu.html" class="nav-link hover:text-nexus-purple transition">W.W.U.</a>
+            </div>
+
+            <div class="flex gap-4 items-center">
+                <button id="cart-trigger" class="relative p-2 hover:text-nexus-cyan transition group">
+                    <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-nexus-cyan text-black text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-sm hidden shadow-[0_0_10px_rgba(0,240,255,0.5)]">0</span>
+                </button>
+                <button id="menu-btn" class="md:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-nexus-black/95 backdrop-blur-xl translate-x-full transition-transform duration-300 flex flex-col justify-center px-10 md:hidden">
+        <button id="close-menu" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <div class="space-y-6">
+            <a href="index.html" class="block text-3xl font-tech font-bold text-gray-500 hover:text-white">01 // INTERFAZ</a>
+            <a href="catalogo.html" class="block text-3xl font-tech font-bold text-nexus-cyan">02 // HARDWARE</a>
+            <a href="gamers.html" class="block text-3xl font-tech font-bold text-gray-500 hover:text-nexus-green">03 // DIVISIÓN GAMING</a>
+            <a href="wwu.html" class="block text-3xl font-tech font-bold text-gray-500 hover:text-nexus-purple">04 // W.W.U.</a>
+        </div>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="fixed top-20 w-full z-40 bg-nexus-black/80 backdrop-blur-md border-b border-white/5 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+            <div class="relative w-full md:w-96 group">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-nexus-cyan transition-colors"></i>
+                <input type="text" id="search-input" placeholder="BUSCAR EN BASE DE DATOS..." class="w-full bg-white/5 border border-white/10 rounded-sm py-2 pl-10 pr-4 text-sm font-tech text-white focus:outline-none focus:border-nexus-cyan/50 focus:bg-white/10 transition-all placeholder-gray-600 tracking-wider">
+            </div>
+            <div class="flex gap-2 overflow-x-auto hide-scroll w-full md:w-auto pb-1" id="filters-container">
+                <button class="filter-pill active border border-white/10 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap" data-cat="all">TODO</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Smartwatch">RELOJES</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Audio">AUDIO</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Carga">ENERGÍA</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Hogar">HOGAR</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Juguetes">JUGUETES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <main class="pt-48 md:pt-44 px-6 pb-20 max-w-7xl mx-auto w-full flex-grow">
+        <div class="flex justify-between items-end mb-6 border-b border-white/5 pb-2">
+            <h2 class="text-xs font-tech text-nexus-cyan tracking-[0.2em]">UNIDADES DISPONIBLES</h2>
+            <div class="text-[10px] text-gray-600 font-mono">LIVE_UPDATE_V2.5</div>
+        </div>
+        
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <!-- JS Rendered Items -->
+        </div>
+        
+        <div id="empty-msg" class="hidden flex flex-col items-center justify-center py-20 text-gray-600">
+            <i data-lucide="binary" class="w-16 h-16 mb-4 opacity-20"></i>
+            <p class="font-tech tracking-widest">DATOS NO ENCONTRADOS</p>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 z-[90] bg-nexus-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300"></div>
+    
+    <div id="cart-panel" class="fixed inset-y-0 right-0 w-full md:w-[450px] z-[100] bg-[#050505] border-l border-white/10 flex flex-col transform translate-x-full transition-transform duration-300">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+            <h3 class="font-tech font-bold text-xl tracking-wider text-white flex items-center gap-2">
+                <i data-lucide="cpu" class="w-5 h-5 text-nexus-cyan"></i> MODULO_CARRITO
+            </h3>
+            <button id="close-cart" class="text-gray-400 hover:text-white transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+        
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar"></div>
+        
+        <div class="p-6 border-t border-white/10 bg-nexus-black space-y-4">
+            <div class="flex justify-between items-end font-tech">
+                <span class="text-gray-500 tracking-widest text-sm">TOTAL ESTIMADO</span>
+                <span id="cart-total" class="font-bold text-3xl text-white text-shadow-glow">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="w-full py-4 bg-nexus-cyan/10 border border-nexus-cyan text-nexus-cyan font-bold font-tech tracking-widest uppercase hover:bg-nexus-cyan hover:text-black transition-all duration-300 flex justify-center items-center gap-2 group">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Iniciar Transferencia
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // --- DATA ---
+        const products = [
+            { id: 'sw-s10-nike', name: 'Apple Watch S10 Nike', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/placehold.png', badge: 'PROMO' },
+            { id: 'sw-s10-hermes', name: 'Apple Watch S10 Hermes', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/placehold.png', badge: 'LUXE' },
+            { id: 'sw-ultra2', name: 'Apple Watch Ultra 2 Black', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/placehold.png', badge: 'RUGGED' },
+            { id: 'kit-blanca', name: 'Kit Apple White Box', price: 1150, category: 'Smartwatch', img: 'https://i.imgur.com/placehold.png', badge: 'KIT' },
+            { id: 'au-max-orig', name: 'AirPods Max (OEM)', price: 2400, category: 'Audio', img: 'https://i.imgur.com/placehold.png', badge: 'PREMIUM' },
+            { id: 'au-pro2', name: 'AirPods Pro 2G', price: 999, category: 'Audio', img: 'https://i.imgur.com/placehold.png' },
+            { id: 'ac-force', name: 'Air Force 1 Premium', price: 999, category: 'Accesorios', img: 'https://i.imgur.com/placehold.png' },
+            { id: 'ho-foco', name: '360° Cam Bulb', price: 349, category: 'Hogar', img: 'https://i.imgur.com/placehold.png' },
+            { id: 'ga-master', name: 'Game Master R36', price: 1100, category: 'Juguetes', img: 'https://i.imgur.com/placehold.png', badge: 'RETRO' },
+            { id: 'ch-pb', name: 'PowerBank 20k mAh', price: 549, category: 'Carga', img: 'https://i.imgur.com/placehold.png' }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('uniteCart')) || [];
+        const grid = document.getElementById('product-grid');
+        const cartCount = document.getElementById('cart-count');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+
+        function render(cat = 'all', search = '') {
+            grid.innerHTML = '';
+            const filtered = products.filter(p => (cat === 'all' || p.category === cat) && p.name.toLowerCase().includes(search.toLowerCase()));
+
+            if(filtered.length === 0) document.getElementById('empty-msg').classList.remove('hidden');
+            else document.getElementById('empty-msg').classList.add('hidden');
+
+            filtered.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'glass-card p-4 flex flex-col relative rounded-sm group';
+                el.innerHTML = `
+                    ${p.badge ? `<div class="absolute top-0 right-0 bg-nexus-cyan text-black text-[10px] font-bold font-tech px-2 py-1 tracking-widest z-20 pointer-events-none">${p.badge}</div>` : ''}
+                    <a href="producto.html?id=${p.id}" class="flex-grow flex flex-col group-hover:no-underline">
+                        <div class="aspect-square w-full bg-white/5 rounded-sm mb-4 flex items-center justify-center overflow-hidden relative">
+                            <div class="absolute inset-0 bg-nexus-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <img src="${p.img}" class="w-3/4 h-3/4 object-contain group-hover:scale-110 transition duration-500 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" onerror="this.src='https://via.placeholder.com/200x200/111/333?text=NEXUS'">
+                        </div>
+                        <div class="mt-auto">
+                            <p class="text-[10px] text-nexus-cyan font-mono mb-1 uppercase opacity-70">${p.category}</p>
+                            <h3 class="text-sm font-bold text-white leading-tight mb-3 font-tech tracking-wide group-hover:text-nexus-cyan transition-colors">${p.name}</h3>
+                        </div>
+                    </a>
+                    <div class="flex justify-between items-center border-t border-white/10 pt-3 mt-auto">
+                        <span class="font-bold text-white text-lg">$${p.price}</span>
+                        <button onclick="add('${p.id}')" class="w-8 h-8 border border-white/20 hover:border-nexus-cyan hover:bg-nexus-cyan/10 text-white hover:text-nexus-cyan rounded-sm flex items-center justify-center transition-all z-20 relative">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(el);
+            });
+            lucide.createIcons();
+        }
+
+        window.add = (id) => {
+            const p = products.find(x => x.id === id);
+            cart.push(p);
+            save(); renderCart();
+            const btn = document.getElementById('cart-trigger');
+            btn.classList.add('text-nexus-cyan', 'scale-110');
+            setTimeout(() => btn.classList.remove('text-nexus-cyan', 'scale-110'), 200);
+        };
+
+        function save() {
+            localStorage.setItem('uniteCart', JSON.stringify(cart));
+            cartCount.innerText = cart.length;
+            cartCount.classList.toggle('hidden', cart.length === 0);
+        }
+
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            if(cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="text-center text-gray-600 font-tech py-10 tracking-widest">SISTEMA_VACÍO</div>';
+            } else {
+                cart.forEach((item, idx) => {
+                    total += item.price;
+                    const el = document.createElement('div');
+                    el.className = 'flex items-center gap-4 bg-white/5 p-3 rounded-sm border border-white/5 relative group';
+                    el.innerHTML = `
+                        <div class="w-16 h-16 bg-black rounded-sm flex-shrink-0 flex items-center justify-center"><img src="${item.img}" class="w-10 h-10 object-contain"></div>
+                        <div class="flex-grow min-w-0">
+                            <p class="text-xs font-tech text-nexus-cyan mb-1 tracking-wider uppercase">${item.category}</p>
+                            <p class="text-sm font-bold text-white truncate">${item.name}</p>
+                            <p class="text-xs text-gray-400">$${item.price}</p>
+                        </div>
+                        <button onclick="remove(${idx})" class="p-2 text-gray-600 hover:text-nexus-red transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    `;
+                    cartItemsContainer.appendChild(el);
+                });
+            }
+            cartTotal.innerText = `$${total.toLocaleString()}`;
+            lucide.createIcons();
+        }
+
+        window.remove = (idx) => { cart.splice(idx, 1); save(); renderCart(); };
+
+        const openCart = () => { 
+            cartOverlay.classList.remove('hidden'); 
+            setTimeout(() => { 
+                cartOverlay.classList.remove('opacity-0'); 
+                cartPanel.classList.remove('translate-x-full'); 
+            }, 10); 
+            renderCart(); 
+        };
+        
+        const closeCartFn = () => {
+            cartPanel.classList.add('translate-x-full');
+            cartOverlay.classList.add('opacity-0');
+            setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('cart-trigger').addEventListener('click', openCart);
+        document.getElementById('close-cart').addEventListener('click', closeCartFn);
+        cartOverlay.addEventListener('click', closeCartFn);
+
+        document.querySelectorAll('.filter-pill').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-pill').forEach(b => { 
+                    b.classList.remove('active', 'bg-nexus-cyan', 'text-black', 'border-nexus-cyan'); 
+                    b.classList.add('bg-transparent', 'text-gray-400', 'border-white/10'); 
+                });
+                e.target.classList.remove('bg-transparent', 'text-gray-400', 'border-white/10');
+                e.target.classList.add('active', 'bg-nexus-cyan', 'text-black', 'border-nexus-cyan');
+                render(e.target.dataset.cat, document.getElementById('search-input').value);
+            });
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            render(document.querySelector('.filter-pill.active')?.dataset.cat || 'all', e.target.value);
+        });
+
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+        function toggleMenu() { mobileMenu.classList.toggle('translate-x-full'); }
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            if(cart.length === 0) return;
+            let msg = "INICIANDO_SECUENCIA_PEDIDO::NEXUS\n\nÍTEMS:\n";
+            let t = 0;
+            cart.forEach(p => { msg += `[+] ${p.name} ($${p.price})\n`; t += p.price; });
+            msg += `\nVALOR_TOTAL: $${t}\n\nEsperando instrucciones de pago.`;
+            window.open(`https://wa.me/525574123521?text=${encodeURIComponent(msg)}`, '_blank');
+        });
+
+        save(); render();
+    </script>
+</body>
+</html>
