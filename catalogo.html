@@ -29,6 +29,8 @@
         .filter-pill { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s ease; }
         .filter-pill.active { background: #00F0FF; color: #000; border-color: #00F0FF; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
         .nav-link { font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        /* Asegura que las imágenes con fondo blanco se vean bien integradas */
+        .product-img-container img { mix-blend-mode: normal; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -82,12 +84,11 @@
             </div>
             <div class="flex gap-2 overflow-x-auto hide-scroll w-full md:w-auto pb-1" id="filters-container">
                 <button class="filter-pill active border border-white/10 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap" data-cat="all">TODO</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Electrónica">TABLETS</button>
                 <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Smartwatch">RELOJES</button>
                 <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Audio">AUDIO</button>
                 <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Gaming">GAMING</button>
-                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Carga">ENERGÍA</button>
-                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Hogar">HOGAR</button>
-                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Accesorios">ACCESORIOS</button>
+                <button class="filter-pill bg-transparent border border-white/10 text-gray-400 px-5 py-1.5 rounded-sm text-xs font-bold whitespace-nowrap hover:border-white/30" data-cat="Deportes">DEPORTES</button>
             </div>
         </div>
     </div>
@@ -95,8 +96,8 @@
     <!-- Main Grid -->
     <main class="pt-48 md:pt-44 px-6 pb-20 max-w-7xl mx-auto w-full flex-grow">
         <div class="flex justify-between items-end mb-6 border-b border-white/5 pb-2">
-            <h2 class="text-xs font-tech text-nexus-cyan tracking-[0.2em]">UNIDADES DISPONIBLES</h2>
-            <div class="text-[10px] text-gray-600 font-mono">LIVE_UPDATE_V2.5</div>
+            <h2 class="text-xs font-tech text-nexus-cyan tracking-[0.2em]">CATÁLOGO PREMIUM 2025</h2>
+            <div class="text-[10px] text-gray-600 font-mono">LIVE_UPDATE_V3.0</div>
         </div>
         
         <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -136,51 +137,39 @@
     <script>
         lucide.createIcons();
 
-        // --- INVENTARIO NEXUS 2025 (ACTUALIZADO) ---
+        // --- INVENTARIO NEXUS 2025 (ACTUALIZADO & ORDENADO) ---
         const products = [
-            // --- SMARTWATCHES ---
-            { id: 'sw-ultra2', name: 'Apple Watch Ultra 2 Black (OEM)', price: 799, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=Ultra+2+Black', badge: 'PROMO', desc: 'Diseño robusto para condiciones extremas. Pantalla amplia y batería de larga duración.' },
-            { id: 'sw-s10-hermes', name: 'Apple Watch S10 Hermes (OEM)', price: 799, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=S10+Hermes', badge: 'LUXE', desc: 'Acabados premium estilo Hermes. Ideal para un look ejecutivo.' },
-            { id: 'sw-s10-nike', name: 'Apple Watch S10 Nike (OEM)', price: 799, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=S10+Nike', badge: 'SPORT', desc: 'Edición deportiva con correas Nike transpirables.' },
-            { id: 'sw-kit-apple', name: 'Kit Apple Ultra Premium', price: 1150, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=Kit+Apple', badge: 'BUNDLE', desc: 'La experiencia completa: Reloj + Audífonos + Batería + Cargador.' },
-            { id: 'sw-gtide-r9', name: 'G-Tide R9 Edge', price: 1399, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=R9+Edge', desc: 'Pantalla AMOLED curva de alta resolución. Sumergible.' },
-            { id: 'sw-gtide-s6', name: 'G-Tide S6 Pro', price: 999, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=S6+Pro', desc: 'Versatilidad total. Incluye 3 correas intercambiables.' },
-            { id: 'sw-gtide-s5', name: 'G-Tide S5 Pro', price: 999, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=S5+Pro', desc: 'Estilo robusto tipo Ultra. Resistencia superior.' },
-            { id: 'sw-hw-s10', name: 'HW S10 Call', price: 1399, category: 'Smartwatch', img: 'https://placehold.co/400x400/111/444?text=HW+S10+Call', badge: 'ANDROID', desc: 'Sistema Android completo en tu muñeca con cámara.' },
+             // --- PRODUCTOS ESTRELLA (Top del Catálogo) ---
+            { id: 'tab-ipad', name: 'Tablet tipo iPad Pro 10.1"', price: 2499, category: 'Electrónica', img: 'https://i.imgur.com/jqFnQzA.png', badge: 'TOP VENTAS', desc: 'Pantalla de 10.1" HD. 8GB RAM + 256GB Almacenamiento. Procesador Octa-Core. Ideal para productividad y entretenimiento.' },
+            { id: 'tab-s25', name: 'Tablet S25 Ultra', price: 2499, category: 'Electrónica', img: 'https://i.imgur.com/e1g2Em1.png', badge: 'NEW', desc: 'Rendimiento superior. Pantalla 10.1", Android 12, 8GB RAM, 256GB ROM. Doble cámara y batería de larga duración.' },
+            { id: 'sw-ultra-apple', name: 'Apple Watch Ultra (OEM)', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/GsqP7WQ.png', badge: 'HOT', desc: 'Diseño robusto de 49mm. Tornillos reales, broche de seguridad en correas y pantalla infinita.' },
+            { id: 'au-beats-studio', name: 'Beats Studio Pro (OEM)', price: 599, category: 'Audio', img: 'https://i.imgur.com/a/XbpzmJV.png', badge: 'PRO AUDIO', desc: 'Sonido de alta fidelidad con cancelación de ruido activa. Diseño circumaural para máxima comodidad.' },
 
-            // --- AUDIO ---
-            { id: 'au-max-orig', name: 'AirPods Max (Original Quality)', price: 2899, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=AirPods+Max', badge: 'TOP', desc: 'Audio de alta fidelidad. Cancelación de ruido activa real.' },
-            { id: 'au-max-11', name: 'AirPods Max (v1.1)', price: 799, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=Max+1.1', desc: 'Estilo icónico a un precio accesible. Excelente sonido.' },
-            { id: 'au-pro2', name: 'AirPods Pro 2G (OEM)', price: 999, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=Pro+2G', desc: 'Cancelación de ruido mejorada y audio espacial.' },
-            { id: 'au-beats-studio', name: 'Beats Studio Pro (OEM)', price: 599, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=Beats+Studio', desc: 'Bajos potentes y diseño acústico optimizado.' },
-            { id: 'au-gtide-future', name: 'G-TIDE Earpods Future', price: 499, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=Future+Buds', badge: 'TECH', desc: 'Estuche con pantalla inteligente.' },
-            { id: 'au-gtide-clip', name: 'G-TIDE Clip 1', price: 399, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=Clip+1', desc: 'Diseño Open-Ear innovador.' },
-            { id: 'au-c1-rgb', name: 'Audífonos C1 RGB', price: 399, category: 'Audio', img: 'https://placehold.co/400x400/111/444?text=C1+RGB', desc: 'Diadema con luces RGB para estilo gamer.' },
-
+            // --- SMARTWATCHES PREMIUM ---
+            { id: 'sw-ultra-hermes', name: 'Apple Watch Ultra Hermes (OEM)', price: 850, category: 'Smartwatch', img: 'https://i.imgur.com/JoHpOnX.png', badge: 'LUXE', desc: 'Edición de lujo. Incluye correas exclusivas estilo Hermes y carátulas premium.' },
+            { id: 'sw-s10-hermes', name: 'Apple Watch S10 Hermes (OEM)', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/IkRxLiq.png', desc: 'Serie 10 con estética Hermes. Elegancia y funcionalidad con doble extensible incluido.' },
+            { id: 'sw-s10-nike', name: 'Apple Watch S10 Nike (OEM)', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/YhM4qTx.png', badge: 'SPORT', desc: 'Edición deportiva. Correas perforadas Nike para mejor ventilación y carátulas exclusivas.' },
+            { id: 'sw-r9-edge', name: 'G-Tide R9 Edge', price: 1399, category: 'Smartwatch', img: 'https://i.imgur.com/yxK0Cl6.png', badge: 'RECOMENDADO', desc: 'VENTAJAS: Pantalla AMOLED Curva 3D, Sumergible IP68, cuerpo metálico delgado y batería de larga duración.' },
+            
             // --- GAMING ---
-            { id: 'gm-master-r40', name: 'Game Master R40 Ultra', price: 1399, category: 'Gaming', img: 'https://placehold.co/400x400/111/444?text=R40+Ultra', badge: 'HOT', desc: 'Consola portátil definitiva. Emula miles de juegos retro.' },
-            { id: 'gm-stick-4k', name: 'Game Stick 4K', price: 899, category: 'Gaming', img: 'https://placehold.co/400x400/111/444?text=Stick+4K', desc: 'Convierte tu TV en un arcade. 10,000+ juegos.' },
-            { id: 'gm-combo-4', name: 'Combo Gamer 4 en 1', price: 650, category: 'Gaming', img: 'https://placehold.co/400x400/111/444?text=Combo+Gamer', desc: 'Kit completo: Teclado, Mouse, Audífonos y Pad.' },
-            { id: 'gm-pistola', name: 'Pistola Hidrogel AK47', price: 350, category: 'Gaming', img: 'https://placehold.co/400x400/111/444?text=AK47+Gel', desc: 'Dispara orbeez de hidrogel. Batería recargable.' },
-            { id: 'gm-reloj-kids', name: 'Reloj Gamer Kids + Cámara', price: 149, category: 'Gaming', img: 'https://placehold.co/400x400/111/444?text=Reloj+Kids', desc: 'Entretenimiento para niños con minijuegos y cámara.' },
+            { id: 'gm-r40-ultra', name: 'Game Master R40 Ultra', price: 1399, category: 'Gaming', img: 'https://i.imgur.com/rqGh7VN.png', badge: 'GAMER CHOICE', desc: 'Consola portátil premium. Pantalla de alta resolución, emula múltiples plataformas retro. Batería recargable.' },
+            { id: 'gm-stick', name: 'Game Stick Lite 4K', price: 899, category: 'Gaming', img: 'https://i.imgur.com/t0imnN7.png', desc: 'Conecta directo al HDMI. Incluye miles de juegos clásicos y dos controles inalámbricos.' },
 
-            // --- HOGAR ---
-            { id: 'hg-tablet-a16', name: 'Tablet Tipo iPad A16 Pro', price: 2499, category: 'Hogar', img: 'https://placehold.co/400x400/111/444?text=Tablet+A16', badge: 'PRO', desc: 'Pantalla nítida y rendimiento fluido. 8GB RAM / 256GB.' },
-            { id: 'hg-tablet-kids', name: 'Tablet Kids (Minions/Sonic)', price: 1250, category: 'Hogar', img: 'https://placehold.co/400x400/111/444?text=Tablet+Kids', desc: 'Diseño resistente a golpes con fundas de personajes.' },
-            { id: 'hg-camara-360', name: 'Cámara Foco 360 WiFi', price: 399, category: 'Hogar', img: 'https://placehold.co/400x400/111/444?text=Cam+360', desc: 'Seguridad discreta. Instalación fácil como foco.' },
-            { id: 'hg-ventilador', name: 'Ventilador Humidificador', price: 289, category: 'Hogar', img: 'https://placehold.co/400x400/111/444?text=Ventilador', desc: 'Frescura portátil con neblina de agua.' },
-            { id: 'hg-termo', name: 'Termo Stanley (Top Quality)', price: 299, category: 'Hogar', img: 'https://placehold.co/400x400/111/444?text=Stanley', desc: 'Mantiene temperatura por horas. Acero inoxidable.' },
+            // --- MÁS SMARTWATCHES ---
+            { id: 'sw-s6-pro', name: 'G-Tide S6 Pro', price: 999, category: 'Smartwatch', img: 'https://i.imgur.com/LH9vZCl.png', desc: 'Pack versátil: Incluye 3 correas intercambiables (silicón, metálica, piel) para cualquier ocasión.' },
+            { id: 'sw-s5-pro', name: 'G-Tide S5 Pro', price: 999, category: 'Smartwatch', img: 'https://i.imgur.com/LpW23dS.png', desc: 'Estilo Ultra resistente. Pantalla grande de alta definición y monitoreo deportivo.' },
+            { id: 'sw-hk11-ultra3', name: 'HK11 Ultra 3 AMOLED', price: 1299, category: 'Smartwatch', img: 'https://i.imgur.com/CBjs1KR.png', badge: 'AMOLED', desc: 'Pantalla AMOLED real. Fluidez extrema, colores vibrantes y diseño 1:1 Ultra.' },
+            { id: 'sw-hk11-promax', name: 'HK11 Pro Max+ AMOLED', price: 1299, category: 'Smartwatch', img: 'https://i.imgur.com/5viNy6h.png', desc: 'Pantalla AMOLED de alto rendimiento. Interfaz súper fluida y potentes funciones.' },
+            { id: 'sw-hk11-mini', name: 'HK11 Mini AMOLED', price: 1299, category: 'Smartwatch', img: 'https://i.imgur.com/G2iw0TN.png', badge: 'COMPACTO', desc: 'Versión compacta de alta gama. Ideal para muñecas más pequeñas sin sacrificar potencia AMOLED.' },
+            { id: 'sw-sam-amoled', name: 'Galaxy Watch AMOLED (OEM)', price: 1299, category: 'Smartwatch', img: 'https://i.imgur.com/rGlBUnO.png', desc: 'Pantalla AMOLED vibrante con logo Samsung al encender. NOTA: NO es sumergible.' },
+            { id: 'sw-sam-ultra', name: 'Samsung Watch Ultra (OEM)', price: 799, category: 'Smartwatch', img: 'https://i.imgur.com/2bQiDjQ.png', desc: 'Diseño deportivo inspirado en el modelo Ultra. Resistente a salpicaduras leves.' },
 
-            // --- CARGA ---
-            { id: 'ch-pb-40k', name: 'Power Bank 40,000 mAh', price: 1100, category: 'Carga', img: 'https://placehold.co/400x400/111/444?text=40k+mAh', badge: 'POWER', desc: 'Energía masiva para múltiples cargas.' },
-            { id: 'ch-pb-10k', name: 'Power Bank 10,000 mAh P1', price: 399, category: 'Carga', img: 'https://placehold.co/400x400/111/444?text=10k+mAh', desc: 'Compacta y eficiente G-Tide.' },
-            { id: 'ch-magsafe-bat', name: 'Batería MagSafe c/Pantalla', price: 399, category: 'Carga', img: 'https://placehold.co/400x400/111/444?text=MagSafe+LCD', desc: 'Carga magnética con indicador LED.' },
-            { id: 'ch-cargador-60w', name: 'Cargador 60W Triple', price: 399, category: 'Carga', img: 'https://placehold.co/400x400/111/444?text=60W+Triple', desc: 'Carga laptop, tablet y celular simultáneamente.' },
-
-            // --- ACCESORIOS ---
-            { id: 'ac-wallet', name: 'Wallet MagSafe Piel', price: 250, category: 'Accesorios', img: 'https://placehold.co/400x400/111/444?text=Wallet', desc: 'Cartera magnética para iPhone.' },
-            { id: 'ac-lentes', name: 'Lentes Inteligentes', price: 650, category: 'Accesorios', img: 'https://placehold.co/400x400/111/444?text=Smart+Glasses', badge: 'TECH', desc: 'Audio Bluetooth integrado en el armazón.' },
-            { id: 'ac-oceano', name: 'Oceano Pack 10L', price: 180, category: 'Accesorios', img: 'https://placehold.co/400x400/111/444?text=Dry+Bag', desc: 'Bolsa seca impermeable para aventuras.' }
+             // --- AUDIO & OTROS ---
+            { id: 'au-clip-1', name: 'G-Tide Audífonos Clip 1', price: 399, category: 'Audio', img: 'https://i.imgur.com/E2ELAAB.png', badge: 'INNOVACIÓN', desc: 'Diseño Open-Ear. No bloquea el oído, ideal para deportes al aire libre. Ligeros y cómodos.' },
+            { id: 'au-spk-karaoke', name: 'Bocina Karaoke Box BTS', price: 950, category: 'Audio', img: 'https://i.imgur.com/syXUnDi.png', desc: 'Potencia y diversión. Incluye micrófono inalámbrico y luces LED rítmicas para fiestas.' },
+            { id: 'au-spk-65', name: 'Bocina 6.5" Fantastic Quality', price: 499, category: 'Audio', img: 'https://i.imgur.com/Of8qn1M.png', desc: 'Tamaño compacto, gran sonido. Conectividad Bluetooth, USB y radio FM.' },
+            { id: 'au-spk-8', name: 'Bocina 8" Fantastic Quality', price: 650, category: 'Audio', img: 'https://i.imgur.com/P7wxRdK.png', desc: 'Mayor potencia de bajos con woofer de 8 pulgadas. Batería recargable.' },
+            { id: 'dp-box', name: 'Entrenador de Box Musical', price: 899, category: 'Deportes', img: 'https://i.imgur.com/7AgCZwq.png', desc: 'Máquina de entrenamiento montable en pared. Mejora reflejos al ritmo de la música.' }
         ];
 
         let cart = JSON.parse(localStorage.getItem('uniteCart')) || [];
@@ -200,17 +189,17 @@
 
             filtered.forEach(p => {
                 const el = document.createElement('div');
-                el.className = 'glass-card p-4 flex flex-col relative rounded-sm group';
+                el.className = 'glass-card p-4 flex flex-col relative rounded-sm group product-img-container';
                 el.innerHTML = `
                     ${p.badge ? `<div class="absolute top-0 right-0 bg-nexus-cyan text-black text-[10px] font-bold font-tech px-2 py-1 tracking-widest z-20 pointer-events-none">${p.badge}</div>` : ''}
                     <a href="producto.html?id=${p.id}" class="flex-grow flex flex-col group-hover:no-underline">
-                        <div class="aspect-square w-full bg-white/5 rounded-sm mb-4 flex items-center justify-center overflow-hidden relative">
-                            <div class="absolute inset-0 bg-nexus-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <img src="${p.img}" class="w-3/4 h-3/4 object-contain group-hover:scale-110 transition duration-500 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" onerror="this.src='https://placehold.co/200x200/111/333?text=NEXUS'">
+                        <div class="aspect-square w-full bg-white/5 rounded-sm mb-4 flex items-center justify-center overflow-hidden relative p-4">
+                            <div class="absolute inset-0 bg-nexus-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <img src="${p.img}" class="w-full h-full object-contain group-hover:scale-105 transition duration-500 relative z-10 drop-shadow-md" onerror="this.src='https://placehold.co/200x200/111/333?text=NEXUS'">
                         </div>
                         <div class="mt-auto">
                             <p class="text-[10px] text-nexus-cyan font-mono mb-1 uppercase opacity-70">${p.category}</p>
-                            <h3 class="text-sm font-bold text-white leading-tight mb-3 font-tech tracking-wide group-hover:text-nexus-cyan transition-colors">${p.name}</h3>
+                            <h3 class="text-sm font-bold text-white leading-tight mb-3 font-tech tracking-wide group-hover:text-nexus-cyan transition-colors line-clamp-2">${p.name}</h3>
                         </div>
                     </a>
                     <div class="flex justify-between items-center border-t border-white/10 pt-3 mt-auto">
@@ -225,8 +214,6 @@
             lucide.createIcons();
         }
 
-        // ... (Rest of logic: add, save, renderCart, window.remove, openCart, closeCartFn, filter listeners, checkout) ...
-        
         window.add = (id) => {
             const p = products.find(x => x.id === id);
             cart.push(p);
@@ -253,7 +240,7 @@
                     const el = document.createElement('div');
                     el.className = 'flex items-center gap-4 bg-white/5 p-3 rounded-sm border border-white/5 relative group';
                     el.innerHTML = `
-                        <div class="w-16 h-16 bg-black rounded-sm flex-shrink-0 flex items-center justify-center"><img src="${item.img}" class="w-10 h-10 object-contain"></div>
+                        <div class="w-16 h-16 bg-white/10 rounded-sm flex-shrink-0 flex items-center justify-center p-2"><img src="${item.img}" class="w-full h-full object-contain"></div>
                         <div class="flex-grow min-w-0">
                             <p class="text-xs font-tech text-nexus-cyan mb-1 tracking-wider uppercase">${item.category}</p>
                             <p class="text-sm font-bold text-white truncate">${item.name}</p>
