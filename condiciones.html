@@ -3,89 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | Protocolos y Transparencia</title>
+    <title>NEXUS | Protocolos y Condiciones</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { nexus: { cyan: '#00F0FF', black: '#030303', purple: '#7000FF' } },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], tech: ['Rajdhani', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
     <style>
         body { background: #030303; color: #ccc; font-family: 'Outfit'; }
         .font-tech { font-family: 'Rajdhani', sans-serif; }
-        .data-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
-        .grade-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .data-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; border-radius: 4px; transition: 0.3s; }
+        .data-panel:hover { border-color: rgba(0, 240, 255, 0.3); background: rgba(255,255,255,0.03); }
+        .nav-link { font-family: 'Rajdhani', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.3s; }
+        .nav-link:hover { color: white; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 top-0 bg-black/90 border-b border-white/5 p-4">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-sm font-mono text-gray-500 hover:text-white flex items-center gap-2">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> VOLVER_INICIO
+    <!-- Nav Completo -->
+    <nav class="fixed w-full z-50 top-0 bg-black/90 backdrop-blur-md border-b border-white/5 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="https://i.imgur.com/GtqogQE.png" alt="NEXUS Logo" class="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                <span class="font-tech text-xl text-white tracking-widest group-hover:text-nexus-cyan transition-colors">NEXUS</span>
             </a>
-            <span class="font-tech text-nexus-cyan tracking-widest">DB_TRANSPARENCIA</span>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-8 text-sm text-gray-400">
+                <a href="index.html" class="nav-link hover:text-white transition">Interfaz</a>
+                <a href="catalogo.html" class="nav-link hover:text-white transition">Hardware</a>
+                <a href="gamers.html" class="nav-link hover:text-white transition">Gaming</a>
+                <a href="wwu.html" class="nav-link hover:text-nexus-purple transition">W.W.U.</a>
+            </div>
+
+            <!-- Mobile & Info Badge -->
+            <div class="flex items-center gap-4">
+                <span class="font-tech text-nexus-cyan tracking-widest text-xs border border-nexus-cyan/30 px-2 py-1 rounded hidden md:block">INFO_DB</span>
+                <button id="menu-btn" class="md:hidden text-white hover:text-nexus-cyan transition"><i data-lucide="menu" class="w-8 h-8"></i></button>
+            </div>
         </div>
     </nav>
 
-    <main class="pt-24 pb-20 px-6 max-w-4xl mx-auto space-y-12">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-nexus-black/95 backdrop-blur-xl translate-x-full transition-transform duration-300 flex flex-col justify-center px-10 md:hidden bg-black/95">
+        <button id="close-menu" class="absolute top-6 right-6 text-white hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <div class="space-y-8">
+            <a href="index.html" class="block text-4xl font-tech font-bold text-white hover:text-nexus-cyan transition">01 // INTERFAZ</a>
+            <a href="catalogo.html" class="block text-4xl font-tech font-bold text-gray-500 hover:text-nexus-cyan transition">02 // HARDWARE</a>
+            <a href="gamers.html" class="block text-4xl font-tech font-bold text-gray-500 hover:text-nexus-cyan transition">03 // GAMING</a>
+            <a href="wwu.html" class="block text-4xl font-tech font-bold text-gray-500 hover:text-nexus-cyan transition">04 // W.W.U.</a>
+        </div>
+    </div>
+
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto space-y-12">
 
         <div class="border-l-2 border-white/20 pl-6">
-            <h1 class="text-4xl font-tech font-bold text-white mb-2">ESTÁNDARES DE CALIDAD</h1>
-            <p class="text-gray-500 max-w-lg">
-                NEXUS opera con absoluta transparencia. A continuación se presentan las especificaciones técnicas sobre la condición de los equipos.
+            <h1 class="text-4xl md:text-5xl font-tech font-bold text-white mb-4">CÓMO TRABAJAMOS</h1>
+            <p class="text-gray-500 max-w-lg leading-relaxed">
+                Transparencia total en cada transacción. A continuación, detallamos nuestros protocolos de logística, garantía y pago.
             </p>
         </div>
 
-        <section>
-            <h2 class="text-xl font-tech font-bold text-white mb-6 flex items-center gap-2"><i data-lucide="layers"></i> CLASIFICACIÓN HARDWARE</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                
-                <div class="data-panel border-t-2 border-t-green-500">
-                    <div class="flex items-center mb-2 font-bold text-green-500 font-mono text-xs">
-                        <span class="grade-indicator bg-green-500 shadow-[0_0_10px_#22c55e]"></span> GRADO A
-                    </div>
-                    <h3 class="text-white font-bold mb-2">IMPECABLE</h3>
-                    <p class="text-xs leading-relaxed">Estética 9.5-10/10. Sin rasguños visibles. Salud de batería óptima. Indistinguible de nuevo.</p>
+        <section class="grid md:grid-cols-2 gap-6">
+            
+            <!-- Envíos -->
+            <div class="data-panel group">
+                <div class="w-10 h-10 bg-blue-500/10 rounded flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition">
+                    <i data-lucide="truck" class="text-blue-400"></i>
                 </div>
-
-                <div class="data-panel border-t-2 border-t-yellow-500">
-                    <div class="flex items-center mb-2 font-bold text-yellow-500 font-mono text-xs">
-                        <span class="grade-indicator bg-yellow-500"></span> GRADO B
-                    </div>
-                    <h3 class="text-white font-bold mb-2">ESTÁNDAR</h3>
-                    <p class="text-xs leading-relaxed">Estética 8-9/10. Micro-rayones visibles bajo luz directa. 100% Funcional. Mejor relación valor/precio.</p>
-                </div>
-
-                <div class="data-panel border-t-2 border-t-red-500">
-                    <div class="flex items-center mb-2 font-bold text-red-500 font-mono text-xs">
-                        <span class="grade-indicator bg-red-500"></span> GRADO C
-                    </div>
-                    <h3 class="text-white font-bold mb-2">ECONOMÍA</h3>
-                    <p class="text-xs leading-relaxed">Desgaste o golpes visibles. Pantalla e internos 100% funcionales. El precio más bajo.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="grid md:grid-cols-2 gap-8">
-            <div class="data-panel">
-                <h3 class="font-tech text-lg text-white mb-4 flex gap-2"><i data-lucide="shield-check"></i> PROTOCOLO DE GARANTÍA</h3>
-                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-gray-600">
-                    <li><strong>Cobertura de 7 Días</strong> por defectos de fábrica.</li>
-                    <li>Nula si se detecta daño por agua o caídas.</li>
-                    <li>Empaque original requerido para RMA (Devolución).</li>
+                <h3 class="font-tech text-xl text-white mb-2 tracking-wide">LOGÍSTICA Y ENVÍOS</h3>
+                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-blue-500">
+                    <li>Cobertura nacional en todo México.</li>
+                    <li><strong>Costo de Envío:</strong> Desde <strong>$250 MXN</strong>.</li>
+                    <li>El costo puede variar ligeramente según el peso volumétrico de pedidos grandes o zonas extendidas.</li>
+                    <li>Guía de rastreo proporcionada vía WhatsApp al despachar.</li>
                 </ul>
             </div>
-            <div class="data-panel">
-                <h3 class="font-tech text-lg text-white mb-4 flex gap-2"><i data-lucide="truck"></i> LOGÍSTICA</h3>
-                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-gray-600">
-                    <li>Cobertura nacional (México).</li>
-                    <li>Seguro Opcional: 1.5% del valor total.</li>
-                    <li>ID de Rastreo proporcionado vía WhatsApp.</li>
+
+            <!-- Garantía -->
+            <div class="data-panel group">
+                <div class="w-10 h-10 bg-green-500/10 rounded flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition">
+                    <i data-lucide="shield-check" class="text-green-400"></i>
+                </div>
+                <h3 class="font-tech text-xl text-white mb-2 tracking-wide">PROTOCOLO DE GARANTÍA</h3>
+                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-green-500">
+                    <li><strong>30 Días de Protección</strong> contra defectos de fábrica en electrónicos.</li>
+                    <li>La garantía se anula por daños físicos, contacto con agua (incluso en equipos IP68) o variaciones de voltaje.</li>
+                    <li>Para aplicar garantía, es indispensable conservar el empaque original.</li>
                 </ul>
             </div>
+
+            <!-- Pagos -->
+            <div class="data-panel group">
+                <div class="w-10 h-10 bg-purple-500/10 rounded flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition">
+                    <i data-lucide="credit-card" class="text-purple-400"></i>
+                </div>
+                <h3 class="font-tech text-xl text-white mb-2 tracking-wide">MÉTODOS DE PAGO</h3>
+                <ul class="text-sm text-gray-400 space-y-3 list-disc pl-4 marker:text-purple-500">
+                    <li>Transferencia Bancaria (SPEI).</li>
+                    <li>Depósito en OXXO / Cajero.</li>
+                    <li>Una vez confirmado el pago, se inicia el proceso de despacho en un lapso de 24 horas hábiles.</li>
+                </ul>
+            </div>
+
+            <!-- Dinámica -->
+            <div class="data-panel group">
+                <div class="w-10 h-10 bg-nexus-cyan/10 rounded flex items-center justify-center mb-4 group-hover:bg-nexus-cyan/20 transition">
+                    <i data-lucide="message-circle" class="text-nexus-cyan"></i>
+                </div>
+                <h3 class="font-tech text-xl text-white mb-2 tracking-wide">DINÁMICA DE COMPRA</h3>
+                <ol class="text-sm text-gray-400 space-y-3 list-decimal pl-4 marker:text-nexus-cyan marker:font-bold">
+                    <li>Explora el catálogo y añade productos a tu carrito.</li>
+                    <li>Haz clic en "Iniciar Transferencia" para enviar tu pedido pre-cargado a nuestro WhatsApp.</li>
+                    <li>Un asesor confirmará existencias y te enviará los datos de pago finales.</li>
+                </ol>
+            </div>
+
         </section>
 
     </main>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const menu = document.getElementById('mobile-menu');
+        function toggleMenu() { menu.classList.toggle('translate-x-full'); }
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+    </script>
 </body>
-</html>g
+</html>
